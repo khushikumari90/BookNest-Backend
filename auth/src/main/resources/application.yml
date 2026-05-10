@@ -1,0 +1,46 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: AUTH
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/booknest
+    username: root
+    password: "@rawat2525KHUSHI"
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: Ov23liIl6mMA3nx4XbCs
+            client-secret: e810c01093ee1204dc413eb8af1e8e0f394ffa45
+            scope: user:email
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+# ── Swagger / OpenAPI ────────────────────────────────────────────────────────
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+    display-request-duration: true
+    try-it-out-enabled: true
+  packages-to-scan: com.booknest.auth
+  show-actuator: false
