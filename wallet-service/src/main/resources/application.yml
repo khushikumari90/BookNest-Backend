@@ -1,0 +1,45 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: WALLET-SERVICE
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/booknest_wallet
+    username: root
+    password: "@rawat2525KHUSHI"
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+# ── Razorpay Configuration ──────────────────────────────────────────────────
+razorpay:
+  key-id: rzp_test_Sldeo59bFrOncr
+  key-secret: ZNiA6xMNRGZs5h9jJBvt4Zex
+  currency: INR
+
+# ── Swagger / OpenAPI ────────────────────────────────────────────────────────
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+    display-request-duration: true
+    try-it-out-enabled: true
+  packages-to-scan: com.booknest.wallet
+  show-actuator: false
