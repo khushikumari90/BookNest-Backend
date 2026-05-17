@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.booknest</groupId>
+    <artifactId>BookNest-Backend</artifactId>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <sonar.organization>khushikumari90</sonar.organization>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
+
+    <modules>
+        <module>auth-service</module>
+        <module>book-service</module>
+        <module>cart-service</module>
+        <module>eureka-server</module>
+        <module>notification-service</module>
+        <module>order-service</module>
+        <module>review-service</module>
+        <module>wallet-service</module>
+        <module>wishlist-service</module>
+    </modules>
+
+</project>
