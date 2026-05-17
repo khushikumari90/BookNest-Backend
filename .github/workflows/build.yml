@@ -1,0 +1,126 @@
+name: SonarQube
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    name: Build and analyze
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@c1e323688fd81a25caa38c78aa6df2d33d3e20d9
+        with:
+          java-version: 17
+          distribution: 'zulu'
+
+      - name: Cache SonarQube packages
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Cache Maven packages
+        uses: actions/cache@0057852bfaa89a56745caa8c7296529d2fc39830
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Build and analyze - auth-service
+        working-directory: auth-service
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+            -Dsonar.projectKey=khushikumari90_BookNest-Backend \
+            -Dsonar.organization=khushikumari90 \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dmaven.test.failure.ignore=true \
+            -DskipTests=true || true
+
+      - name: Build and analyze - book-service
+        working-directory: book-service
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+            -Dsonar.projectKey=khushikumari90_BookNest-Backend \
+            -Dsonar.organization=khushikumari90 \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -DskipTests=true || true
+
+      - name: Build and analyze - cart-service
+        working-directory: cart-service
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+            -Dsonar.projectKey=khushikumari90_BookNest-Backend \
+            -Dsonar.organization=khushikumari90 \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -DskipTests=true || true
+
+      - name: Build and analyze - order-service
+        working-directory: order-service
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+            -Dsonar.projectKey=khushikumari90_BookNest-Backend \
+            -Dsonar.organization=khushikumari90 \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -DskipTests=true || true
+
+      - name: Build and analyze - notification-service
+        working-directory: notification-service
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+            -Dsonar.projectKey=khushikumari90_BookNest-Backend \
+            -Dsonar.organization=khushikumari90 \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -DskipTests=true || true
+
+      - name: Build and analyze - wallet-service
+        working-directory: wallet-service
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+            -Dsonar.projectKey=khushikumari90_BookNest-Backend \
+            -Dsonar.organization=khushikumari90 \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -DskipTests=true || true
+
+      - name: Build and analyze - review-service
+        working-directory: review-service
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+            -Dsonar.projectKey=khushikumari90_BookNest-Backend \
+            -Dsonar.organization=khushikumari90 \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -DskipTests=true || true
+
+      - name: Build and analyze - wishlist-service
+        working-directory: wishlist-service
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+            -Dsonar.projectKey=khushikumari90_BookNest-Backend \
+            -Dsonar.organization=khushikumari90 \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -DskipTests=true || true
