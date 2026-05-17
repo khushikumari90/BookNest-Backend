@@ -1,0 +1,174 @@
+name: SonarCloud Analysis
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+
+jobs:
+  sonar-backend:
+    name: Backend (All Services)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Scan auth-service
+        working-directory: backend/auth-service
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B verify sonar:sonar \
+            -Dsonar.projectKey=khushikumari90_BookNest-Backend \
+            -Dsonar.organization=khushikumari90 \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.sources=src/main/java \
+            -Dsonar.java.binaries=target/classes \
+            -Dmaven.test.failure.ignore=true \
+            -Dspring.autoconfigure.exclude=org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration,org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration \
+            -Dspring.datasource.url=jdbc:h2:mem:testdb \
+            -Dspring.datasource.driver-class-name=org.h2.Driver \
+            -Dspring.jpa.database-platform=org.hibernate.dialect.H2Dialect || true
+
+      - name: Scan book-service
+        working-directory: backend/book-service
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B verify sonar:sonar \
+            -Dsonar.projectKey=khushikumari90_BookNest-Backend \
+            -Dsonar.organization=khushikumari90 \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.sources=src/main/java \
+            -Dsonar.java.binaries=target/classes \
+            -Dmaven.test.failure.ignore=true \
+            -Dspring.datasource.url=jdbc:h2:mem:testdb \
+            -Dspring.datasource.driver-class-name=org.h2.Driver \
+            -Dspring.jpa.database-platform=org.hibernate.dialect.H2Dialect || true
+
+      - name: Scan cart-service
+        working-directory: backend/cart-service
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B verify sonar:sonar \
+            -Dsonar.projectKey=khushikumari90_BookNest-Backend \
+            -Dsonar.organization=khushikumari90 \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.sources=src/main/java \
+            -Dsonar.java.binaries=target/classes \
+            -Dmaven.test.failure.ignore=true \
+            -Dspring.datasource.url=jdbc:h2:mem:testdb \
+            -Dspring.datasource.driver-class-name=org.h2.Driver \
+            -Dspring.jpa.database-platform=org.hibernate.dialect.H2Dialect || true
+
+      - name: Scan order-service
+        working-directory: backend/order-service
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B verify sonar:sonar \
+            -Dsonar.projectKey=khushikumari90_BookNest-Backend \
+            -Dsonar.organization=khushikumari90 \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.sources=src/main/java \
+            -Dsonar.java.binaries=target/classes \
+            -Dmaven.test.failure.ignore=true \
+            -Dspring.datasource.url=jdbc:h2:mem:testdb \
+            -Dspring.datasource.driver-class-name=org.h2.Driver \
+            -Dspring.jpa.database-platform=org.hibernate.dialect.H2Dialect || true
+
+      - name: Scan notification-service
+        working-directory: backend/notification-service
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B verify sonar:sonar \
+            -Dsonar.projectKey=khushikumari90_BookNest-Backend \
+            -Dsonar.organization=khushikumari90 \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.sources=src/main/java \
+            -Dsonar.java.binaries=target/classes \
+            -Dmaven.test.failure.ignore=true \
+            -Dspring.datasource.url=jdbc:h2:mem:testdb \
+            -Dspring.datasource.driver-class-name=org.h2.Driver \
+            -Dspring.jpa.database-platform=org.hibernate.dialect.H2Dialect || true
+
+      - name: Scan wallet-service
+        working-directory: backend/wallet-service
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B verify sonar:sonar \
+            -Dsonar.projectKey=khushikumari90_BookNest-Backend \
+            -Dsonar.organization=khushikumari90 \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.sources=src/main/java \
+            -Dsonar.java.binaries=target/classes \
+            -Dmaven.test.failure.ignore=true \
+            -Dspring.datasource.url=jdbc:h2:mem:testdb \
+            -Dspring.datasource.driver-class-name=org.h2.Driver \
+            -Dspring.jpa.database-platform=org.hibernate.dialect.H2Dialect || true
+
+      - name: Scan review-service
+        working-directory: backend/review-service
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B verify sonar:sonar \
+            -Dsonar.projectKey=khushikumari90_BookNest-Backend \
+            -Dsonar.organization=khushikumari90 \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.sources=src/main/java \
+            -Dsonar.java.binaries=target/classes \
+            -Dmaven.test.failure.ignore=true \
+            -Dspring.datasource.url=jdbc:h2:mem:testdb \
+            -Dspring.datasource.driver-class-name=org.h2.Driver \
+            -Dspring.jpa.database-platform=org.hibernate.dialect.H2Dialect || true
+
+      - name: Scan wishlist-service
+        working-directory: backend/wishlist-service
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B verify sonar:sonar \
+            -Dsonar.projectKey=khushikumari90_BookNest-Backend \
+            -Dsonar.organization=khushikumari90 \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.sources=src/main/java \
+            -Dsonar.java.binaries=target/classes \
+            -Dmaven.test.failure.ignore=true \
+            -Dspring.datasource.url=jdbc:h2:mem:testdb \
+            -Dspring.datasource.driver-class-name=org.h2.Driver \
+            -Dspring.jpa.database-platform=org.hibernate.dialect.H2Dialect || true
