@@ -2,9 +2,9 @@ name: SonarCloud Analysis
 
 on:
   push:
-    branches: [ main, master, develop ]
+    branches: [ main, master, develop, auth-service, book-service, cart-service, order-service, notification-service, wallet-service, review-service, wishlist-service, eureka-server ]
   pull_request:
-    branches: [ main, master, develop ]
+    branches: [ main, master, develop, auth-service, book-service, cart-service, order-service, notification-service, wallet-service, review-service, wishlist-service, eureka-server ]
 
 jobs:
   sonar-backend:
@@ -29,7 +29,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Scan auth-service
-        working-directory: backend/auth-service
+        working-directory: auth-service
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -48,7 +48,7 @@ jobs:
             -Dspring.jpa.database-platform=org.hibernate.dialect.H2Dialect || true
 
       - name: Scan book-service
-        working-directory: backend/book-service
+        working-directory: book-service
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -66,7 +66,7 @@ jobs:
             -Dspring.jpa.database-platform=org.hibernate.dialect.H2Dialect || true
 
       - name: Scan cart-service
-        working-directory: backend/cart-service
+        working-directory: cart-service
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -84,7 +84,7 @@ jobs:
             -Dspring.jpa.database-platform=org.hibernate.dialect.H2Dialect || true
 
       - name: Scan order-service
-        working-directory: backend/order-service
+        working-directory: order-service
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -102,7 +102,7 @@ jobs:
             -Dspring.jpa.database-platform=org.hibernate.dialect.H2Dialect || true
 
       - name: Scan notification-service
-        working-directory: backend/notification-service
+        working-directory: notification-service
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -120,7 +120,7 @@ jobs:
             -Dspring.jpa.database-platform=org.hibernate.dialect.H2Dialect || true
 
       - name: Scan wallet-service
-        working-directory: backend/wallet-service
+        working-directory: wallet-service
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -138,7 +138,7 @@ jobs:
             -Dspring.jpa.database-platform=org.hibernate.dialect.H2Dialect || true
 
       - name: Scan review-service
-        working-directory: backend/review-service
+        working-directory: review-service
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -156,7 +156,7 @@ jobs:
             -Dspring.jpa.database-platform=org.hibernate.dialect.H2Dialect || true
 
       - name: Scan wishlist-service
-        working-directory: backend/wishlist-service
+        working-directory: wishlist-service
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
