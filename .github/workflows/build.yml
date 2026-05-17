@@ -12,25 +12,25 @@ jobs:
     name: Build and analyze
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Set up JDK 17
-        uses: actions/setup-java@c1e323688fd81a25caa38c78aa6df2d33d3e20d9
+        uses: actions/setup-java@v4
         with:
           java-version: 17
           distribution: 'zulu'
 
       - name: Cache SonarQube packages
-        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
+        uses: actions/cache@v4
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
       - name: Cache Maven packages
-        uses: actions/cache@0057852bfaa89a56745caa8c7296529d2fc39830
+        uses: actions/cache@v4
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
@@ -45,7 +45,6 @@ jobs:
             -Dsonar.projectKey=khushikumari90_BookNest-Backend \
             -Dsonar.organization=khushikumari90 \
             -Dsonar.host.url=https://sonarcloud.io \
-            -Dmaven.test.failure.ignore=true \
             -DskipTests=true || true
 
       - name: Build and analyze - book-service
